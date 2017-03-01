@@ -1,0 +1,106 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="../bower_components/paper-item/paper-item.html">
+<link rel="import" href="shared-styles.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/paper-menu-button/paper-menu-button.html">
+<link rel="import" href="../bower_components/paper-toolbar/paper-toolbar.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/iron-list/iron-list.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="./horaries-matery.html">
+<link rel="import" href="./my-place.html">
+
+<dom-module id="my-admin">
+<template>
+    <style include="shared-styles" is="custom-style">
+      :host {
+        display: block;
+        padding: 10px;
+      }
+      
+        .title{
+            margin-left: 0px !important;
+        }
+        .module{
+           margin: 3em 3em 3em 3em;
+        }
+        paper-item{
+            width: 15em !important;
+            padding: 5px;
+        }
+      paper-button.save {
+        background-color: var(--paper-cyan-600);
+        color: white;
+        margin-top: 1em;
+      }
+      paper-button.save[active] {
+        background-color: var(--paper-grey-600);
+      }
+      paper-button.disabled {
+        color: white;
+      }
+        paper-toolbar{
+            background-color: transparent;
+            color: #000;
+        }
+    .container-fluid #scheduler_here { 			
+        height: 700px; 			
+        width: 100%; 			
+        border: 1px solid #cecece; 		
+        } 		
+        #scheduler_here { 			
+            border-radius: 4px; 		
+        }
+    </style>
+
+    <div>
+        <div class="module">
+          <span class="title"><h1>Materias</h1></span>
+          <paper-input label="Nombre" type="text"></paper-input>
+          <paper-input label="Código" type="text"></paper-input>
+          <paper-input label="Semestre al que pertenece" type="number" min="1" max="9"></paper-input>
+          <paper-button toggles raised class="custom save">Guardar</paper-button>
+        </div>
+        
+        <div class="module">
+          <template is="dom-bind">
+           <paper-toolbar>
+            <iron-ajax url="data.json" last-response="{{data}}" auto></iron-ajax> 
+            <paper-menu-button>
+                <paper-icon-button icon="menu" class="dropdown-trigger">
+                </paper-icon-button>
+                  <paper-menu class="dropdown-content">
+                        <template class="" is="dom-repeat" items="{{data}}" as="item">
+                                <paper-item>{{item.name}}</paper-item>
+                        </template>
+                </paper-menu>  
+            </paper-menu-button>
+            <span class="title"> <h1>Horarios</h1></span>  
+           </paper-toolbar>
+         </template>
+<!--         <horaries-matery> </horaries-matery>-->
+        </div>
+    </div>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'my-admin',
+
+    });
+  </script>
+</dom-module>

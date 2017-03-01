@@ -1,0 +1,159 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../bower_components/paper-dialog-scrollable/paper-dialog-scrollable.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../bower_components/neon-animation/neon-animated-pages.html">
+<link rel="import" href="../bower_components/neon-animation/neon-animated-pages.html">
+<link rel="import" href="./data.json">
+
+
+
+<dom-module id="my-place">
+<template>
+    <style include="iron-flex iron-flex-alignment" is="custom-style">
+      :host {
+        display: block;
+        padding: 10px;
+      }
+       .flex-horizontal {
+        @apply(--layout-horizontal);
+      }
+      .flexchild {
+        @apply(--layout-flex);
+      }     
+      .iron-flex{
+ 
+        height: 8em;  
+        margin-right: .2em;
+        margin-top: .2em;
+        }
+        .aisle{
+           background-color: cadetblue;
+           width: 20%;
+        }
+        .aisle-principal{
+            width: 100%;
+            background-color: cornflowerblue;
+        }
+        .classroom{
+           background-color: darkseagreen;
+           width: 50%;    
+        }
+         paper-toolbar{
+            background-color: transparent;
+            color: #000;
+        }
+        .title{
+            margin-left: 0px !important;
+        }
+    </style>
+    
+    <div>
+     
+      <div class="module">
+        <paper-icon-button icon="add" on-tap="toggleDialog" class="dropdown-trigger">
+        </paper-icon-button>
+      <paper-dialog id="dialog">
+        <h3>Agregar espacio a una planta</h3>
+        <paper-dialog-scrollable>
+           <div >
+            <paper-dropdown-menu label="Espacios">
+              <paper-listbox id="areaSelect" class="dropdown-content" selected="{{selectedIndex}}">
+                <paper-item>Aula</paper-item>
+                <paper-item>Oficina</paper-item>
+                <paper-item>Baño</paper-item>
+                <paper-item>Pasillo principal</paper-item>
+                <paper-item>Pasillo secundario</paper-item>
+              </paper-listbox>
+            </paper-dropdown-menu>
+            <paper-input id="numberArea" value="" label="Número" type=""></paper-input>
+<!--
+            <paper-input id="numberLevel"label="Piso" type="number" min="1" max="3"></paper-input>
+-->
+           </div>
+        </paper-dialog-scrollable>
+        <div class="buttons">
+            <paper-button dialog-dismiss>Cancelar</paper-button>
+            <paper-button dialog-confirm autofocus on-tap="addData">Guardar</paper-button>
+        </div>
+      </paper-dialog>
+    </div>
+    
+    <div class="layout vertical">        
+        <div class="layout horizontal">
+            <div class="iron-flex aisle">Pasillo secundario</div>
+            <div class="iron-flex classroom">Aula</div>
+            <div class="iron-flex classroom">Aula</div>
+            <div class="iron-flex aisle">Pasillo secundario</div>
+        </div>
+           <div class="layout horizontal">
+            <div class="iron-flex aisle aisle-principal"> Pasillo principal</div>
+        </div>
+         <div class="layout horizontal">
+            <div class="iron-flex classroom">Aula</div>
+            <div class="iron-flex classroom">Aula</div>
+            <div class="iron-flex aisle">Pasillo secundario</div>
+        </div>
+     </div>
+     
+    <iron-ajax 
+        auto
+        url="areas.json"
+        handle-as="json"
+        last-response="{{response}}"
+        on-response="responseHandler" 
+    ></iron-ajax> 
+    </div>
+    
+    
+    
+    </template>
+
+  <script>
+    Polymer({
+      is: 'my-place',
+        created: function(){
+            var nuevo;
+            this.options = [ {'area': 'aula'}, {'area': 'oficina'}, {'area': 'baño'}, {'area': 'pasillo principal'}, {'area': 'pasillo secundario'}]
+        },
+        toggleDialog: function() {
+            this.$.dialog.toggle();
+        },
+        addData: function(){
+            console.log(this.$.numberArea.value);
+            console.log(this.$.areaSelect.Select);
+            var selectedItem = this.options[this.selectedIndex];
+            console.log(selectedItem.area);
+            
+            nuevo.push({"name": this.$.numberArea.value, 
+                        "level": "1", 
+                        "type": selectedItem.area});
+            this.$.numberArea.value = null;
+            this.$.areaSelect.selected = null;
+            console.log(nuevo);
+            
+
+        },
+        responseHandler: function(e) {
+            nuevo = e.detail.response;
+        }
+        
+    });
+  </script>
+</dom-module>
