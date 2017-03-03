@@ -1,3 +1,5 @@
+```json
+
 {
 	"materia" : "Base de datos",
 	"id": 1,
@@ -10,3 +12,4 @@
 	},
 	"nivel": 6
 }
+```
