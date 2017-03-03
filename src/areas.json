@@ -1,4 +1,4 @@
 [
-  {"name": "aula", "level": 1, "type": "Aula"},
-  {"name": "pasillo", "level": 1, "type": "Pasillo"}
+  {"name": "aula", "level": 1, "type": "classroom"},
+  {"name": "pasillo", "level": 1, "type": "aisle"}
 ]

@@ -10,6 +10,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="shared-styles.html">
+<link rel="import" href="../bower_components/paper-chip/paper-chip.html">
 
 <dom-module id="my-report">
   <template>
@@ -21,11 +22,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
         
     </style>
-
-    <div class="card">
-      <h1>Alumnos bloqueados</h1>
-      <p>Ut labores minimum atomorum pro. Laudem tibique ut has.</p>
-    </div>
+    
+    <paper-chip removable>
+      <iron-icon class="icon" icon="avatars:avatar-1"></iron-icon>
+      <h1>Delianny Villarroel</h1>
+      <h2>por intentar entrar al baño de chicas</h2>
+    </paper-chip>
+    
   </template>
 
   <script>

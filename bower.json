@@ -17,7 +17,8 @@
     "iron-elements": "PolymerElements/iron-elements",
     "paper-elements": "PolymerElements/paper-elements",
     "paper-icon-button": "PolymerElements/paper-icon-button#~1.1.0",
-    "polymer": "Polymer/polymer#^1.6.0"
+    "polymer": "Polymer/polymer#^1.6.0",
+    "paper-chip": "bendavis78/paper-chip#^1.1.2"
   },
   "devDependencies": {
     "web-component-tester": "^4.0.0"

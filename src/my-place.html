@@ -46,6 +46,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         .aisle{
            background-color: cadetblue;
            width: 20%;
+  
         }
         .aisle-principal{
             width: 100%;
@@ -53,7 +54,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
         .classroom{
            background-color: darkseagreen;
-           width: 50%;    
+           width: 50%;  
+   
         }
          paper-toolbar{
             background-color: transparent;
@@ -65,6 +67,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </style>
     
     <div>
+      <iron-ajax 
+        auto
+        id="ajax"        
+        url="areas.json"
+        handle-as="json"
+        params="{{ajaxParams}}"        
+        last-response="{{response}}"
+        on-response="responseHandler" 
+      ></iron-ajax> 
      
       <div class="module">
         <paper-icon-button icon="add" on-tap="toggleDialog" class="dropdown-trigger">
@@ -97,7 +108,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     
     <div class="layout vertical">        
         <div class="layout horizontal">
-            <div class="iron-flex aisle">Pasillo secundario</div>
+            <template class="" id="esquema" is="dom-repeat" items="{{response}}" as="item">
+                <div class$="iron-flex {{item.type}}">{{item.name}}</div>
+            </template>
+        </div>
+     </div>
+    
+<!--    
+    <div class="layout vertical">        
+        <div class="layout horizontal">
+            <div class="iron-flex aisle" >Pasillo secundario</div>
             <div class="iron-flex classroom">Aula</div>
             <div class="iron-flex classroom">Aula</div>
             <div class="iron-flex aisle">Pasillo secundario</div>
@@ -111,14 +131,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <div class="iron-flex aisle">Pasillo secundario</div>
         </div>
      </div>
-     
-    <iron-ajax 
-        auto
-        url="areas.json"
-        handle-as="json"
-        last-response="{{response}}"
-        on-response="responseHandler" 
-    ></iron-ajax> 
+-->
     </div>
     
     
@@ -128,28 +141,33 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <script>
     Polymer({
       is: 'my-place',
+        properties: {
+           
+       },
         created: function(){
             var nuevo;
-            this.options = [ {'area': 'aula'}, {'area': 'oficina'}, {'area': 'baño'}, {'area': 'pasillo principal'}, {'area': 'pasillo secundario'}]
+            this.options = [ {'area': 'classroom'}, {'area': 'classroom'}, {'area': 'classroom'}, {'area': 'aisle-principal'}, {'area': 'aisle'}]
         },
+        //Función de abrir el moda
         toggleDialog: function() {
             this.$.dialog.toggle();
         },
+        //Agrega espacios a area.json
         addData: function(){
-            console.log(this.$.numberArea.value);
-            console.log(this.$.areaSelect.Select);
             var selectedItem = this.options[this.selectedIndex];
             console.log(selectedItem.area);
             
             nuevo.push({"name": this.$.numberArea.value, 
                         "level": "1", 
                         "type": selectedItem.area});
+            
             this.$.numberArea.value = null;
             this.$.areaSelect.selected = null;
             console.log(nuevo);
             
 
         },
+        //Permite capturar el evento del modal
         responseHandler: function(e) {
             nuevo = e.detail.response;
         }
