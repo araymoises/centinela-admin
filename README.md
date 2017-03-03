@@ -45,13 +45,3 @@ json
 
 
 
-
-```
-json
-
-{
-	"ID": "",
-	"nombre": "Bombero",
-	"Restricciones": "oficinas, baños, etc"
-}
-```
