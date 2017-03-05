@@ -1,0 +1,113 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../bower_components/iron-form/iron-form.html">
+<link rel="import" href="../bower_components/paper-checkbox/paper-checkbox.html">
+<link rel="import" href="../bower_components/paper-checkbox/paper-checkbox.html">
+<link rel="import" href="../bower_components/paper-radio-group/paper-radio-group.html">
+<link rel="import" href="../bower_components/paper-radio-button/paper-radio-button.html">
+<link rel="import" href="./my-place.html">
+<link rel="import" href="shared-styles.html">
+
+<dom-module id="my-user">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+
+        padding: 10px;
+      }
+          .module{
+               margin: 3em 3em 3em 3em;
+          }
+          .title{
+               margin-left: 0px !important;
+          }
+          paper-checkbox{
+               margin: 1em 1em 1em 1em;
+          }
+         .sub-module{
+              margin: 0 0 6em 0;
+         }
+    </style>
+
+         <div class="module">
+               <div class="sub-module">
+                    <span class="title"><h1>Tipos de personas</h1></span>
+                    <form is="iron-form" method="get" on-iron-form-response="responseHandler" action="http://localhost" id="formType">
+<!--            Área de acceso permitida para un tipo de persona-->
+
+                        <h5>Áreas permitidas:</h5>
+                        
+                        <paper-checkbox name="areas" value="office">Oficinas administrativas</paper-checkbox>
+                        
+                         <paper-checkbox name="areas" value="nursing" required>Áreas de salud</paper-checkbox>
+                         
+                         <paper-checkbox name="areas" value="library">Biblioteca</paper-checkbox>
+                         
+                         <paper-checkbox name="areas" value="bath" required>Baños</paper-checkbox>
+                         
+                         <paper-checkbox name="areas" value="classroom">Aulas</paper-checkbox>
+<!--                        Nombre del tipo de persona-->
+
+                         <paper-input required name="name" label="Tipo de persona"></paper-input>
+                         <br>
+                         
+                         <paper-button raised on-tap="responseHandler">Guardar</paper-button>
+                    </form> 
+              </div>
+              <div class="sub-module">
+                    <span class="title"><h1>Personas</h1></span>
+                    <form is="iron-form" method="post" on-iron-form-response="responseHandler" action="/" id="formPerson">
+<!--                        Tipo de persona-->
+                        <h5>Tipo de persona:</h5>
+                         <paper-checkbox name="type" value="student">Estudiante</paper-checkbox> 
+                         
+                         <paper-checkbox name="type" value="student">Administrativo</paper-checkbox>
+                         
+                         <paper-checkbox name="type" value="student">Obrero</paper-checkbox>
+<!--                        Datos de la persona-->
+
+                         <paper-input required name="name" label="Name"></paper-input>
+                         
+                         <paper-input required name="lastname" label="Last name"></paper-input>
+                         
+                         <paper-input required name="identification" label="Identification"></paper-input>
+                         
+                         <h5>Género:</h5>
+                         <paper-radio-group aria-labelledby="label1">
+                              <paper-radio-button value="f"  name="genderF">Femenino</paper-radio-button>
+                              
+                              <paper-radio-button value="m"  name="genderM">Masculino</paper-radio-button>
+                         </paper-radio-group>
+                         
+                         <br>
+                         <paper-button raised on-tap="responseHandler">Guardar</paper-button>
+                    </form> 
+              </div>
+              
+          </div>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'my-user',
+          responseHandler: function(e) {
+                //this.$.formPerson.submit();
+               //Get //
+               
+               Polymer.dom(e).localTarget.parentElement.submit();
+            },  
+    });
+  </script>
+</dom-module>

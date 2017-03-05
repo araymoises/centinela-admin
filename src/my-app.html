@@ -83,6 +83,7 @@
       <app-drawer id="drawer" class="menu">
         <app-toolbar><img class="img-logo" width="80em" height="80em" src="../images/logo.png"></app-toolbar>
         <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
+          <a name="user" href="/user"><iron-icon icon="icons:perm-identity"></iron-icon> Usuarios</a>
           <a name="admin" href="/admin"><iron-icon icon="icons:face"></iron-icon> Administrador</a>
           <a name="setting" href="/setting"><iron-icon icon="icons:settings"></iron-icon> Configuración</a>
           <a name="report" href="/report"><iron-icon icon="icons:lock"></iron-icon> Reportes</a>
@@ -104,6 +105,7 @@
             attr-for-selected="name"
             fallback-selection="view404"
             role="main">
+          <my-user name="user"></my-user>
           <my-admin name="admin"></my-admin>
           <my-setting name="setting"></my-setting>
           <my-report name="report"></my-report>
