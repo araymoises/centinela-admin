@@ -25,73 +25,100 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="./my-place.html">
 
 <dom-module id="my-admin">
-<template>
-    <style include="shared-styles" is="custom-style">
-      :host {
-        display: block;
-        padding: 10px;
-      }
-      
-        .title{
+     <template>
+     <style include="shared-styles" is="custom-style">
+          :host {
+          display: block;
+          padding: 10px;
+          }
+
+          .title{
             margin-left: 0px !important;
-        }
-        .module{
+          }
+          .module{
            margin: 3em 3em 3em 3em;
-        }
-        paper-item{
+          }
+          paper-item{
             width: 15em !important;
             padding: 5px;
-        }
-      paper-button.save {
-        background-color: var(--paper-cyan-600);
-        color: white;
-        margin-top: 1em;
-      }
-      paper-button.save[active] {
-        background-color: var(--paper-grey-600);
-      }
-      paper-button.disabled {
-        color: white;
-      }
-        paper-toolbar{
+          }
+          paper-button.save {
+          background-color: var(--paper-cyan-600);
+          color: white;
+          margin-top: 1em;
+          }
+          paper-button.save[active] {
+          background-color: var(--paper-grey-600);
+          }
+          paper-button.disabled {
+          color: white;
+          }
+          paper-toolbar{
             background-color: transparent;
             color: #000;
-        }
-    </style>
+          }
+          .sub-module{
+              margin: 0 0 6em 0;
+         }
+          .sections{
+               width: 20%; margin: 0px;
+          }
+     </style>
 
-    <div>
-        <div class="module">
-          <span class="title"><h1>Materias</h1></span>
-          <paper-input label="Nombre" type="text"></paper-input>
-          <paper-input label="Código" type="text"></paper-input>
-          <paper-input label="Semestre al que pertenece" type="number" min="1" max="9"></paper-input>
-          <paper-button toggles raised class="custom save">Guardar</paper-button>
-        </div>
-        
-        <div class="module">
-          <template is="dom-bind">
-           <paper-toolbar>
-            <iron-ajax url="data.json" last-response="{{data}}" auto></iron-ajax> 
-            <paper-menu-button>
-                <paper-icon-button icon="menu" class="dropdown-trigger">
-                </paper-icon-button>
-                  <paper-menu class="dropdown-content">
-                        <template class="" is="dom-repeat" items="{{data}}" as="item">
+          <div class="module">
+<!--              Crear materia-->
+              
+               <div class="sub-module">
+                    <span class="title"><h1>Materias</h1></span>
+                    <paper-input label="Nombre" type="text"></paper-input>
+                    
+                    <paper-input label="Código" type="text"></paper-input>
+                    
+                    <paper-input label="Nivel al que pertenece" type="number" min="1" max="9"></paper-input>
+                    
+                    <paper-button toggles raised class="custom save">Guardar</paper-button>
+               </div>
+               
+<!--              Crear horario por sección-->
+              
+               <div class="sub-module">
+                    <span class="title"> <h1>Horarios</h1></span>  
+
+                    <iron-ajax url="data.json" last-response="{{data}}" auto></iron-ajax>
+
+                    <paper-dropdown-menu label="Materias">
+                         <paper-listbox class="dropdown-content">
+                             <template is="dom-repeat" items="{{data}}" as="item">
                                 <paper-item>{{item.name}}</paper-item>
-                        </template>
-                </paper-menu>  
-            </paper-menu-button>
-            <span class="title"> <h1>Horarios</h1></span>  
-           </paper-toolbar>
-         </template>
-        </div>
-    </div>
-  </template>
+                             </template>
+                         </paper-listbox>
+                    </paper-dropdown-menu>
+                    
+                    <paper-dropdown-menu label="Secciones">
+                         <paper-listbox class="dropdown-content">
+                             <template is="dom-repeat" items="{{data}}" as="item">
+                                <paper-item>1</paper-item>
+                                <paper-item>2</paper-item>
+                                <paper-item>3</paper-item>
+                                <paper-item>4</paper-item>
+                                <paper-item>5</paper-item>
+                                <paper-item>6</paper-item>
+                                <paper-item>7</paper-item>
+                                <paper-item>8</paper-item>
+                             </template>
+                         </paper-listbox>
+                    </paper-dropdown-menu>
+                    
+                    <paper-button toggles raised class="custom save">Crear horario</paper-button>
+               </div>
+               <horaries-matery></horaries-matery>
+         </div>
+     </template>
 
-  <script>
-    Polymer({
-      is: 'my-admin',
+     <script>
+          Polymer({
+           is: 'my-admin',
 
-    });
-  </script>
+          });
+     </script>
 </dom-module>

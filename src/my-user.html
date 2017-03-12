@@ -39,15 +39,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
          .sub-module{
               margin: 0 0 6em 0;
          }
+         paper-button{
+              margin-top: 2em;
+         }
     </style>
 
          <div class="module">
                <div class="sub-module">
                     <span class="title"><h1>Tipos de personas</h1></span>
-                    <form is="iron-form" method="get" on-iron-form-response="responseHandler" action="http://localhost" id="formType">
+                    <form is="iron-form" method="get" id="formType">
 <!--            Área de acceso permitida para un tipo de persona-->
 
-                        <h5>Áreas permitidas:</h5>
+                        <label>Áreas permitidas:</label>
                         
                         <paper-checkbox name="areas" value="office">Oficinas administrativas</paper-checkbox>
                         
@@ -58,6 +61,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                          <paper-checkbox name="areas" value="bath" required>Baños</paper-checkbox>
                          
                          <paper-checkbox name="areas" value="classroom">Aulas</paper-checkbox>
+                         
 <!--                        Nombre del tipo de persona-->
 
                          <paper-input required name="name" label="Tipo de persona"></paper-input>
@@ -68,35 +72,58 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               </div>
               <div class="sub-module">
                     <span class="title"><h1>Personas</h1></span>
-                    <form is="iron-form" method="post" on-iron-form-response="responseHandler" action="/" id="formPerson">
+                    <form is="iron-form" method="post" id="formPerson">
 <!--                        Tipo de persona-->
-                        <h5>Tipo de persona:</h5>
+                        <label>Tipo de persona:</label>
                          <paper-checkbox name="type" value="student">Estudiante</paper-checkbox> 
                          
                          <paper-checkbox name="type" value="student">Administrativo</paper-checkbox>
                          
                          <paper-checkbox name="type" value="student">Obrero</paper-checkbox>
+                         <br>
+                         
+
+<!--                        Género-->
+                         <label>Género:</label>
+                         <paper-radio-group>
+                              <paper-radio-button value="f"  name="gender">Femenino</paper-radio-button>
+                              
+                              <paper-radio-button value="m"  name="gender">Masculino</paper-radio-button>
+                         </paper-radio-group>
+                         <br>
+                         
 <!--                        Datos de la persona-->
 
-                         <paper-input required name="name" label="Name"></paper-input>
+                         <paper-input required name="name" label="Nombre"></paper-input>
                          
-                         <paper-input required name="lastname" label="Last name"></paper-input>
+                         <paper-input required name="lastname" label="Apellido"></paper-input>
                          
-                         <paper-input required name="identification" label="Identification"></paper-input>
+                         <paper-input required name="identification" label="Cédula"></paper-input>
                          
-                         <h5>Género:</h5>
-                         <paper-radio-group aria-labelledby="label1">
-                              <paper-radio-button value="f"  name="genderF">Femenino</paper-radio-button>
+<!--                        Status de la persona-->
+                        
+                         <label>Status:</label>
+                         <paper-radio-group>
+                              <paper-radio-button name="status" value="active">Activo</paper-radio-button>
+                              <paper-radio-button name="status" value="inactive">Inactivo</paper-radio-button>
                               
-                              <paper-radio-button value="m"  name="genderM">Masculino</paper-radio-button>
+                              <paper-radio-button name="status" value="locked">Bloqueado</paper-radio-button>
                          </paper-radio-group>
+                         <br><br>
                          
+<!--                        Foto de la persona-->
+
+                         <label>Foto:</label>
+                         <paper-input type="file" accept="image/*"></paper-input>
+                                                  
                          <br>
                          <paper-button raised on-tap="responseHandler">Guardar</paper-button>
                     </form> 
               </div>
               
           </div>
+
+          <paper-button on-tap="pene">Pene</paper-button>
   </template>
 
   <script>
@@ -108,6 +135,31 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                
                Polymer.dom(e).localTarget.parentElement.submit();
             },  
+            pene: function() {
+              /*axios.get("https://jsonplaceholder.typicode.com/posts").then(res => {
+                console.log(res.data)
+              });*/
+              var data = this.$.formPerson;
+              data = data.serialize();
+              console.log(data.name);
+              var datas = {
+                'name': data.name,
+                'lastname': data.lastname,
+                'identification': data.identification
+              };
+
+              axios.post("https://jsonplaceholder.typicode.com/posts")
+                .then(res =>{
+                  console.log(res)
+                  console.log("Todo ok")
+              }).catch(error =>{
+                  console.log(error)
+                  console.log(error)
+
+              })
+
+
+            }
     });
   </script>
 </dom-module>
