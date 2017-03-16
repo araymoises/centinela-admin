@@ -9,29 +9,32 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="./scheduler-styles.html">
 
-<link rel="stylesheet" href="../telerik.kendoui.professional.2017.1.223.trial/js/shared/styles/examples-offline.css">
-<link rel="stylesheet" href="../telerik.kendoui.professional.2017.1.223.trial/styles/kendo.common.min.css">      
-<link rel="stylesheet" href="../telerik.kendoui.professional.2017.1.223.trial/styles/kendo.rtl.min.css">      
-<link rel="stylesheet" href="../telerik.kendoui.professional.2017.1.223.trial/styles/kendo.default.mobile.min.css">
-<link rel="stylesheet" href="../telerik.kendoui.professional.2017.1.223.trial/styles/kendo.default.min.css">
+
+<link rel="stylesheet" type="text/css" href="../telerik.kendoui.professional.2017.1.223.trial/styles/kendo.common.min.css">    
+<link rel="stylesheet" type="text/css" href="../telerik.kendoui.professional.2017.1.223.trial/js/shared/styles/examples-offline.css">    
+<link rel="stylesheet" type="text/css" href="../telerik.kendoui.professional.2017.1.223.trial/styles/kendo.material.min.css">
+<link rel="stylesheet" type="text/css" href="../telerik.kendoui.professional.2017.1.223.trial/styles/kendo.rtl.min.css">
+
+
 
 <script src="../telerik.kendoui.professional.2017.1.223.trial/js/jquery.min.js"></script>
 <script src="../telerik.kendoui.professional.2017.1.223.trial/js/kendo.all.min.js"></script>
 <script src="../telerik.kendoui.professional.2017.1.223.trial/js/kendo.web.min.js"></script>
+<script src="../telerik.kendoui.professional.2017.1.223.trial/js/kendo.scheduler.min.js"></script>
 <script src="../telerik.kendoui.professional.2017.1.223.trial/js/shared/js/console.js"></script>
 
 
     
 <dom-module id="horaries-matery">
      <template>
-          <style>
+          <style include="scheduler-styles">
                :host {
-                   
+                 background-color: aqua;  
                }
-                        
           </style>
-          
+  
          <div id="scheduler"></div>
 
 
@@ -40,22 +43,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           Polymer({
                is: 'horaries-matery',
                 ready: function(){
-                    
-                     
                      
                      $(this.$.scheduler).kendoScheduler({
                        date: new Date("2013/6/13"),
                        startTime: new Date("2013/6/13 07:00 AM"),
-                       height: 600,
+                       //height: 600,
                        views: [
-                           "day",
-                           { type: "workWeek", selected: true },
-                           "week",
-                           "month",
-                           "agenda",
-                           { type: "timeline", eventHeight: 50}
+                          // "day",
+                           { type: "week", selected: true },
                        ],
                        timezone: "Etc/UTC",
+                          
                        dataSource: {
                            batch: true,
                            transport: {
@@ -77,11 +75,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                                },
 
                            },
+                            
                            schema: {
                                model: {
-                                   id: "taskId",
+                                   id: "horary",
                                    fields: {
-                                       taskId: { from: "TaskID", type: "number" },
+                                       horary: { from: "TaskI", type: "number" },
                                        title: { from: "Title", defaultValue: "No title", validation: { required: true } },
                                        start: { type: "date", from: "Start" },
                                        end: { type: "date", from: "End" },

@@ -32,7 +32,7 @@
       app-header app-toolbar{
         background-color: var(--paper-cyan-600);
         color: #fff;
-        font-family: 'Black Ops One', cursive;
+/*        font-family: 'Black Ops One', cursive;*/
       }
       
       app-toolbar{
@@ -71,54 +71,54 @@
         }
     </style>
 
-    <app-location route="{{route}}"></app-location>
-    <app-route
-        route="{{route}}"
-        pattern="/:page"
-        data="{{routeData}}"
-        tail="{{subroute}}"></app-route>
+     <app-location route="{{route}}"></app-location>
+     <app-route
+     route="{{route}}"
+     pattern="/:page"
+     data="{{routeData}}"
+     tail="{{subroute}}"></app-route>
 
-    <app-drawer-layout fullbleed>
-      <!-- Drawer content -->
-      <app-drawer id="drawer" class="menu">
-        <app-toolbar><img class="img-logo" width="80em" height="80em" src="../images/logo.png"></app-toolbar>
-        <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
-          <a name="user" href="/user"><iron-icon icon="icons:perm-identity"></iron-icon> Usuarios</a>
-          <a name="setting" href="/setting"><iron-icon icon="icons:settings"></iron-icon> Configuración</a>
-          <a name="admin" href="/admin"><iron-icon icon="icons:face"></iron-icon> Administrador</a>
-          <a name="report" href="/report"><iron-icon icon="icons:lock"></iron-icon> Reportes</a>
-        </iron-selector>
-      </app-drawer>
+     <app-drawer-layout fullbleed>
+     <!-- Drawer content -->
+          <app-drawer id="drawer" class="menu">
+               <app-toolbar><img class="img-logo" width="80em" height="80em" src="../images/logo.png"></app-toolbar>
+               <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
+                    <a name="user" href="/user"><iron-icon icon="icons:perm-identity"></iron-icon> Usuarios</a>
+                    <a name="setting" href="/setting"><iron-icon icon="icons:settings"></iron-icon> Configuración</a>
+                    <a name="admin" href="/admin"><iron-icon icon="icons:face"></iron-icon> Administrador</a>
+                    <a name="report" href="/report"><iron-icon icon="icons:lock"></iron-icon> Reportes</a>
+               </iron-selector>
+          </app-drawer>
 
-      <!-- Main content -->
-      <app-header-layout has-scrolling-region>
+          <!-- Main content -->
+          <app-header-layout has-scrolling-region>
 
-        <app-header condenses reveals effects="waterfall">
-          <app-toolbar>
-            <paper-icon-button icon="my-icons:menu" drawer-toggle></paper-icon-button>
-            <div main-title>Centinela 2.0</div>
-          </app-toolbar>
-        </app-header>
+               <app-header condenses reveals effects="waterfall">
+                    <app-toolbar>
+                         <paper-icon-button icon="my-icons:menu" drawer-toggle></paper-icon-button>
+                         <div main-title>Centinela 2.0</div>
+                    </app-toolbar>
+               </app-header>
 
-        <iron-pages
-            selected="[[page]]"
-            attr-for-selected="name"
-            fallback-selection="view404"
-            role="main">
-          <my-user name="user"></my-user>
-          <my-setting name="setting"></my-setting>
-          <my-admin name="admin"></my-admin>
-          <my-report name="report"></my-report>
-        </iron-pages>
-      </app-header-layout>
-    </app-drawer-layout>
+               <iron-pages
+               selected="[[page]]"
+               attr-for-selected="name"
+               fallback-selection="view404"
+               role="main">
+                    <my-user name="user"></my-user>
+                    <my-setting name="setting"></my-setting>
+                    <my-admin name="admin"></my-admin>
+                    <my-report name="report"></my-report>
+               </iron-pages>
+          </app-header-layout>
+     </app-drawer-layout>
+     
   </template>
 
   <script>
     Polymer({
       is: 'my-app',
-
-      properties: {
+          properties: {
         page: {
           type: String,
           reflectToAttribute: true,
