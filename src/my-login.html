@@ -66,16 +66,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     <app-header condenses reveals effects="waterfall">
                          <app-toolbar>
                               <paper-icon-button icon="my-icons:menu" drawer-toggle></paper-icon-button>
-                              <div main-title>Login S.C.A.</div>
-                              <paper-icon-button on-tap="admin" icon="icons:settings"></paper-icon-button>
+                              <div main-title>Centinela S.C.A.</div>
+                              <paper-icon-button icon="icons:arrow-back"></paper-icon-button>
                          </app-toolbar>
                     </app-header>
                     </app-header-layout>
                </app-drawer-layout>
                <div class="module">
-                    <form is="iron-form" method="post" id="person">
-                         <paper-input type="text" name="identification"></paper-input>
-                         <paper-button raised>hola</paper-button>
+                    <form is="iron-form" method="post" id="admin">
+                         <paper-input type="text" name="user"></paper-input>
+                         <paper-input type="password" name="identification"></paper-input>
+                         <paper-button raised>Entrar</paper-button>
                     </form>
                </div>
      </template>
