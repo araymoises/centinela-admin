@@ -106,7 +106,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               </paper-card>
                </app-drawer-layout>
 
-              
+
      </template>
      <script>
      Polymer({
@@ -134,7 +134,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
            _pageChanged: function(page) {
                var resolvedPageUrl = this.resolveUrl('my-' + page + '.html');
            },
-          
+
            _keyPressed: function(e) {
                if (13 === e.charCode) {
                     this.consult();
@@ -149,7 +149,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 'identification': data._id,
               };
 
-              axios.get("186.90.81.120:3000/api/"+data._id)
+              axios.get("192.168.0.102:3000/api/")
                 .then(res =>{
                   console.log(res)
                   console.log("Todo ok")
