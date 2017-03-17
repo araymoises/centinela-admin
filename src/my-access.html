@@ -105,8 +105,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                
                <div class="module" id="module">
                     <form is="iron-form" action="" method="post" id="person">
-                         <paper-input id="test" type="text" name="identification"></paper-input>
-                         <paper-button raised on-tap="consult">Consultar</paper-button>
+                         <paper-input id="test" type="text" name="identification" on-keypress="_keyPressed"></paper-input>
                     </form>
                </div>
                
@@ -139,6 +138,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                var resolvedPageUrl = this.resolveUrl('my-' + page + '.html');
                //this.importHref(resolvedPageUrl, null, this._showPage404, true);
            },
+          
+           _keyPressed: function(e) {
+               if (13 === e.charCode) {
+                    this.consult();
+               }
+          },
  
           consult: function() {
               var data = this.$.person;

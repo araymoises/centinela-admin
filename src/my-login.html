@@ -75,15 +75,43 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                <div class="module">
                     <form is="iron-form" method="post" id="admin">
                          <paper-input type="text" name="user"></paper-input>
-                         <paper-input type="password" name="identification"></paper-input>
-                         <paper-button raised>Entrar</paper-button>
+                         <paper-input type="password" name="password"></paper-input>
+                         <paper-button on-tap="consult" raised>Entrar</paper-button>
                     </form>
                </div>
      </template>
      <script>
      Polymer({
           is: 'my-login',
-         
+         consult: function() {
+              var data = this.$.admin;
+              data = data.serialize();
+              console.log(data.password);
+              var datas = {
+                'user': data.user,
+                'password': data.password,
+              };
+
+              axios.post("https://jsonplaceholder.typicode.com/posts")
+                .then(res =>{
+                  console.log(res)
+                  console.log("Todo ok")
+              }).catch(error =>{
+                  console.log(error)
+                  console.log(error)
+
+              })
+            },
+          access: function(){
+              axios.get("http://jsonplaceholder.typicode.com/posts")
+               .then(response => {
+//                     if(response==true){
+//                          console.log("aceptado")
+//                     }
+              }).catch(error => {
+                     console.log(error)
+                   }) 
+          },
      });
      </script>
 </dom-module>
