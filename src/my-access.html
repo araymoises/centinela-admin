@@ -103,6 +103,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                               <paper-input class="access" type="text" name="_id" placeholder="Ej: VXXXXXXXX" on-keypress="_keyPressed"></paper-input>
                          </form>
                    </div>
+                   <span value="holis">Holi</span>
               </paper-card>
                </app-drawer-layout>
 
@@ -151,24 +152,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
               axios.get("192.168.0.102:3000/api/")
                 .then(res =>{
-                  console.log(res)
-                  console.log("Todo ok")
+                   if(res.data.aceptado){
+                        console.log("OKOK");
+                   }else{
+                         console.log("NOT OK");
+                   }
               }).catch(error =>{
                   console.log(error)
                   console.log(error)
 
               })
             },
-//          access: function(){
-//              axios.get("http://jsonplaceholder.typicode.com/posts")
-//               .then(response => {
-//                    if(response==true){
-//                         console.log("aceptado")
-//                    }
-//              }).catch(error => {
-//                     console.log(error)
-//                   })
-//          },
      });
      </script>
 </dom-module>
