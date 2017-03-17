@@ -33,12 +33,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <style include="shared-styles">
            :host {
              display: block;
-                
+
            }
                paper-input{
-                  width: 100%;  
+                  width: 100%;
                }
-               
+
                paper-button{
                     margin-left: 43%;
                     width: 14%;
@@ -68,9 +68,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                .mierdita{
                     background-color: aqua;
                }
-      
+
           </style>
-                         
+
                <app-location route="{{route}}"></app-location>
                <app-route
                   route="{{route}}"
@@ -78,7 +78,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                   data="{{routeData}}"
                   tail="{{subroute}}">
                </app-route>
-               
+
                <app-drawer-layout fullbleed>
                     <!-- Main content -->
                     <app-header-layout  id="drawer" has-scrolling-region>
@@ -86,8 +86,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     <app-header condenses reveals effects="waterfall">
                          <app-toolbar>
                               <paper-icon-button icon="my-icons:menu" drawer-toggle></paper-icon-button>
-                              
-                              <div main-title>Centinela S.C.A.</div>                                 
+
+                              <div main-title>Centinela S.C.A.</div>
                               <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
                                    <a name="login" href="/login"><iron-icon icon="icons:settings"></iron-icon></a>
                               </iron-selector>
@@ -102,15 +102,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     </app-header>
                     </app-header-layout>
                </app-drawer-layout>
-               
+
                <div class="module" id="module">
-                    <form is="iron-form" action="" method="post" id="person">
-                         <paper-input id="test" type="text" name="identification"></paper-input>
+                    <form is="iron-form" action="" method="get" id="person">
+                         <paper-input id="test" type="text" name="_id"></paper-input>
                          <paper-button raised on-tap="consult">Consultar</paper-button>
                     </form>
                </div>
-               
-               
+
+
      </template>
      <script>
      Polymer({
@@ -139,16 +139,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                var resolvedPageUrl = this.resolveUrl('my-' + page + '.html');
                //this.importHref(resolvedPageUrl, null, this._showPage404, true);
            },
- 
+
           consult: function() {
               var data = this.$.person;
               data = data.serialize();
-              console.log(data.identification);
+              console.log(data._id);
               var datas = {
-                'identification': data.identification,
+                'identification': data._id,
               };
 
-              axios.post("https://jsonplaceholder.typicode.com/posts")
+              axios.get("http://localhost:3000/api/"+data._id)
                 .then(res =>{
                   console.log(res)
                   console.log("Todo ok")
@@ -161,12 +161,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           access: function(){
               axios.get("http://jsonplaceholder.typicode.com/posts")
                .then(response => {
-//                     if(response==true){
-//                          console.log("aceptado")
-//                     }
+                    if(response==true){
+                         console.log("aceptado")
+                    }
               }).catch(error => {
                      console.log(error)
-                   }) 
+                   })
           },
      });
      </script>
