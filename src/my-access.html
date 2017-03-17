@@ -59,11 +59,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                }
                a{
                     color: var(--paper-cyan-600);
+<<<<<<< HEAD
                }
                iron-icon{
                     width: 30px;
                     height: 30px;
                }
+=======
+               }
+               iron-icon{
+                    width: 30px;
+                    height: 30px;
+               }
+>>>>>>> dcf9c54cfa96b22047e3717f14cb6aae7de015de
           </style>
 
                <app-location route="{{route}}"></app-location>
@@ -151,6 +159,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 
               axios.get("http://186.90.81.120:3000/api/"+data._id)
+
                 .then(res =>{
                   console.log(res.data)
                   console.log("Todo okkk")
