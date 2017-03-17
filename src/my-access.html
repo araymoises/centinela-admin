@@ -14,6 +14,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/paper-card/paper-card.html">
 
 <link rel="import" href="../bower_components/app-layout/app-drawer/app-drawer.html">
 <link rel="import" href="../bower_components/app-layout/app-drawer-layout/app-drawer-layout.html">
@@ -33,42 +34,36 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <style include="shared-styles">
            :host {
              display: block;
+             background-color: var(--paper-grey-400);
 
            }
                paper-input{
-                  width: 100%;
+                   width: 100%;
                }
-
-               paper-button{
-                    margin-left: 43%;
-                    width: 14%;
+               paper-card{
+                    margin-left: 35%;
+                    margin-right: 35%;
+                    width: 30%;
+                    background-color: transparent;
+                    background-repeat: no-repeat;
+                    box-shadow: 0px 0px 0px 0px !important;
                }
-                .module{
-                    padding: 15em 10em 0 10em;
+               app-header-layout{
+                    height: 8% !important;
                }
-                 app-header app-toolbar{
-                    background-color: var(--paper-cyan-600);
+               app-header app-toolbar{
                     color: #fff;
                }
-
                 app-toolbar{
-                    background-color: var(--paper-yellow-400);
-                    height: 6em;
-               }
-
-                app-header paper-icon-button {
-                  --paper-icon-button-ink-color: white;
+                    height: 4em;
                }
                a{
-                    color: white;
+                    color: var(--paper-cyan-600);
                }
-               .disabled{
-                    display: none;
+               iron-icon{
+                    width: 30px;
+                    height: 30px;
                }
-               .mierdita{
-                    background-color: aqua;
-               }
-
           </style>
 
                <app-location route="{{route}}"></app-location>
@@ -81,15 +76,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
                <app-drawer-layout fullbleed>
                     <!-- Main content -->
-                    <app-header-layout  id="drawer" has-scrolling-region>
+                    <app-header-layout id="drawer" has-scrolling-region>
 
                     <app-header condenses reveals effects="waterfall">
                          <app-toolbar>
-                              <paper-icon-button icon="my-icons:menu" drawer-toggle></paper-icon-button>
-
-                              <div main-title>Centinela S.C.A.</div>
+                              <div main-title></div>
                               <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
-                                   <a name="login" href="/login"><iron-icon icon="icons:settings"></iron-icon></a>
+                                   <a name="login" href="/login">
+                                        <iron-icon icon="icons:settings"></iron-icon>
+                                   </a>
                               </iron-selector>
                          </app-toolbar>
                          <iron-pages
@@ -101,14 +96,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                        </iron-pages>
                     </app-header>
                     </app-header-layout>
+                    <paper-card>
+                   <div class="card-content">
+                       <img src="../images/Cubo%203D.png">
+                         <form is="iron-form" action="" method="get" id="person">
+                              <paper-input class="access" type="text" name="_id" placeholder="Ej: VXXXXXXXX" on-keypress="_keyPressed"></paper-input>
+                         </form>
+                   </div>
+              </paper-card>
                </app-drawer-layout>
-
-               <div class="module" id="module">
-                    <form is="iron-form" action="" method="get" id="person">
-                         <paper-input id="test" type="text" name="_id"></paper-input>
-                         <paper-button raised on-tap="consult">Consultar</paper-button>
-                    </form>
-               </div>
 
 
      </template>
@@ -137,8 +133,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
            _pageChanged: function(page) {
                var resolvedPageUrl = this.resolveUrl('my-' + page + '.html');
-               //this.importHref(resolvedPageUrl, null, this._showPage404, true);
            },
+
+           _keyPressed: function(e) {
+               if (13 === e.charCode) {
+                    this.consult();
+               }
+          },
 
           consult: function() {
               var data = this.$.person;
@@ -148,7 +149,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 'identification': data._id,
               };
 
-              axios.get("http://localhost:3000/api/"+data._id)
+
+              axios.get("http://186.90.81.120:3000/api/"+data._id)
                 .then(res =>{
                   console.log(res.data)
                   console.log("Todo ok")
@@ -158,16 +160,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
               })
             },
-          access: function(){
-              axios.get("http://jsonplaceholder.typicode.com/posts")
-               .then(response => {
-                    if(response==true){
-                         console.log("aceptado")
-                    }
-              }).catch(error => {
-                     console.log(error)
-                   })
-          },
+//          access: function(){
+//              axios.get("http://jsonplaceholder.typicode.com/posts")
+//               .then(response => {
+//                    if(response==true){
+//                         console.log("aceptado")
+//                    }
+//              }).catch(error => {
+//                     console.log(error)
+//                   })
+//          },
      });
      </script>
 </dom-module>
