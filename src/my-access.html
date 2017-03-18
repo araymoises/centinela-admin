@@ -1,4 +1,3 @@
-
 <!--
 @license
 Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
@@ -30,13 +29,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
 
 <link rel="import" href="./my-login.html">
-<link rel="import" href="./my-app.html">
 
 <dom-module id="my-access">
      <template>
           <style include="shared-styles">
            :host {
              display: block;
+             background-color: var(--paper-grey-400);
+
            }
                paper-input{
                    width: 100%;
@@ -49,6 +49,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     background-repeat: no-repeat;
                     box-shadow: 0px 0px 0px 0px !important;
                }
+               app-header-layout{
+                    height: 8% !important;
+               }
+               app-header app-toolbar{
+                    color: #fff;
+               }
+                app-toolbar{
+                    height: 4em;
+               }
                a{
                     color: var(--paper-cyan-600);
                }
@@ -56,29 +65,51 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     width: 30px;
                     height: 30px;
                }
-               .iconForm{
-                    height: 20em;
-               }
           </style>
 
-               <app-location id="route" route="{{route}}"></app-location>
+               <app-location route="{{route}}"></app-location>
                <app-route
                   route="{{route}}"
                   pattern="/:page"
                   data="{{routeData}}"
                   tail="{{subroute}}">
                </app-route>
-                   
-                   
-                    <paper-card id="card">
-                        <div class="card-content">
-                            <img class="iconForm" src="../images/Cubo%203D.png">
-                              <form is="iron-form" action="" method="get" id="person">
-                                   <paper-input class="access" type="text" name="_id" id="_id" placeholder="Ej: VXXXXXXXX" on-keypress="_keyPressed"></paper-input>
-                              </form>
-                        </div>
-                       <paper-input disabled id="acept" label=""></paper-input>
-                   </paper-card>
+
+               <app-drawer-layout fullbleed>
+                    <!-- Main content -->
+                    <app-header-layout id="drawer" has-scrolling-region>
+
+                    <app-header condenses reveals effects="waterfall">
+                         <app-toolbar>
+                              <div main-title></div>
+                              <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
+                                   <a name="login" href="/login">
+                                        <iron-icon icon="icons:settings"></iron-icon>
+                                   </a>
+                              </iron-selector>
+                         </app-toolbar>
+                         <iron-pages
+                           selected="[[page]]"
+                           attr-for-selected="name"
+                           fallback-selection="view404"
+                           role="main">
+                         <my-login name="login"></my-login>
+                       </iron-pages>
+                    </app-header>
+                    </app-header-layout>
+                    <paper-card>
+                   <div class="card-content">
+                       <img src="../images/Cubo3D.png">
+                         <form is="iron-form" action="" method="get" id="person">
+                              <paper-input class="access"  id="ci" type="text" name="_id" placeholder="Ej: VXXXXXXXX" on-keypress="_keyPressed"></paper-input>
+                         </form>
+                   </div>
+              </paper-card>
+              <paper-dialog id="dialog">
+                   <paper-input disabled id="dataModal" label=""></paper-input>
+               </paper-dialog>
+               </app-drawer-layout>
+
 
      </template>
      <script>
@@ -100,8 +131,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                this.page = page || "access";
 
                if (this.page!="access") {
-                    this.$.card.remove();
-                    this.$.drawer.remove();
+                    this.$.person.remove();
                }
            },
 
@@ -127,16 +157,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 .then(res =>{
                    if(res.data.aceptado){
                         console.log(res.data);
-                        this.$.acept.label=res.data.mensaje;
-                        this.$._id.value = "";
+                       this.$.dataModal.label=res.data.mensaje;
+                       this.$.dialog.open();
+                       this.$.ci.value="";
+                       this.$.ci.focus();
 
+                        console.log("OKOK");
                    }else{
                         console.log("NOT OK");
-                        this.$.acept.label=res.data.mensaje;
-                        this.$._id.value = "";
-                        
+                        this.$.dataModal.label="NO ACEPTADO";
+                        this.$.dialog.open();
                    }
               }).catch(error =>{
+                  console.log(error)
                   console.log(error)
 
               })
