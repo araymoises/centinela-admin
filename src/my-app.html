@@ -14,7 +14,6 @@
 <link rel="import" href="../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="../bower_components/paper-styles/paper-styles.html">
 <link rel="import" href="my-icons.html">
-<link href="https://fonts.googleapis.com/css?family=Black+Ops+One" rel="stylesheet">
 
 
 <dom-module id="my-app">
@@ -69,6 +68,7 @@
       .img-logo{
           margin-left: 30%;
         }
+     
     </style>
 
      <app-location route="{{route}}"></app-location>
@@ -93,7 +93,7 @@
           <!-- Main content -->
           <app-header-layout has-scrolling-region>
 
-               <app-header condenses reveals effects="waterfall">
+               <app-header condenses id="header" reveals effects="waterfall">
                     <app-toolbar>
                          <paper-icon-button icon="my-icons:menu" drawer-toggle></paper-icon-button>
                          <div main-title>Centinela 2.0</div>
@@ -105,6 +105,8 @@
                attr-for-selected="name"
                fallback-selection="view404"
                role="main">
+                    <my-access name="access"></my-access>
+                    <my-login name="login"></my-login>
                     <my-user name="user"></my-user>
                     <my-setting name="setting"></my-setting>
                     <my-admin name="admin"></my-admin>
@@ -119,11 +121,11 @@
     Polymer({
       is: 'my-app',
           properties: {
-        page: {
-          type: String,
-          reflectToAttribute: true,
-          observer: '_pageChanged',
-        },
+             page: {
+               type: String,
+               reflectToAttribute: true,
+               observer: '_pageChanged',
+             },
       },
 
       observers: [
@@ -131,8 +133,13 @@
       ],
 
       _routePageChanged: function(page) {
-        this.page = page || 'admin';
-
+        this.page = page || 'login';
+        
+         if(this.page == 'login' || this.page == 'access') {
+          this.$.drawer.remove();
+          this.$.header.remove();
+        }
+           
         if (!this.$.drawer.persistent) {
           this.$.drawer.close();
         }

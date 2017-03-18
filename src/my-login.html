@@ -13,6 +13,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/iron-form/iron-form.html">
 <link rel="import" href="../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/paper-card/paper-card.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
 
 <link rel="import" href="../bower_components/app-layout/app-drawer/app-drawer.html">
@@ -25,6 +26,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/app-route/app-location.html">
 <link rel="import" href="../bower_components/app-route/app-route.html">
 
+<link rel="import" href="./my-app.html">
+<link rel="import" href="./my-user.html">
+
 
 <dom-module id="my-login">
      <template>
@@ -34,55 +38,65 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 
            }
                paper-input{
-                  width: 100%;  
+                  width: 100%;
+               }
+               paper-card{
+                    margin-left: 35%;
+                    margin-right: 35%;
+                    width: 30%;
+                    background-color: transparent;
+                    background-repeat: no-repeat;
+                    box-shadow: 0px 0px 0px 0px !important;
                }
                paper-button{
-                    margin-left: 43%;
+                    margin-left: 40%;
                     width: 14%;
                }
-                .module{
-                    padding: 15em 10em 0 10em;
-                 }
-                 app-header app-toolbar{
+               .iconForm{
+                    height: 15em;
+               }
+               paper-button.save {
                     background-color: var(--paper-cyan-600);
-                    color: #fff;
-                   }
-
-                app-toolbar{
-                    background-color: var(--paper-yellow-400);
-                    height: 6em;
-                  }
-
-                app-header paper-icon-button {
-                  --paper-icon-button-ink-color: white;
-                  }
+                    color: white;
+                    margin-top: 1em;
+               }
+               paper-button.save[active] {
+                    background-color: var(--paper-grey-600);
+               }
+               paper-button.disabled {
+                    color: white;
+               }
+               
       
           </style>
               
-               <app-drawer-layout fullbleed>
-                    <!-- Main content -->
-                    <app-header-layout has-scrolling-region>
-
-                    <app-header condenses reveals effects="waterfall">
-                         <app-toolbar>
-                              <paper-icon-button icon="my-icons:menu" drawer-toggle></paper-icon-button>
-                              <div main-title>Centinela S.C.A.</div>
-                              <paper-icon-button icon="icons:arrow-back"></paper-icon-button>
-                         </app-toolbar>
-                    </app-header>
-                    </app-header-layout>
-               </app-drawer-layout>
-               <div class="module">
-                    <form is="iron-form" method="post" id="admin">
-                         <paper-input type="text" name="user"></paper-input>
-                         <paper-input type="password" name="password"></paper-input>
-                         <paper-button on-tap="consult" raised>Entrar</paper-button>
-                    </form>
-               </div>
+              <app-location route="{{route}}"></app-location>
+               <app-route
+                  route="{{route}}"
+                  pattern="/:admin"
+                  data="{{routeData}}"
+                  tail="{{subroute}}">
+               </app-route>
+                              
+               <paper-card id="card">
+                   <div class="card-content">
+                        <img class="iconForm" src="../images/centinela.png">
+                         <form is="iron-form" method="get" id="admin">
+                              <paper-input class="access" type="text" name="user" id="user" placeholder="EJ: CENTINELA"></paper-input>
+                              <paper-input class="access" type="password" name="password" placeholder="PASSWORD" id="password"></paper-input>
+                         </form>
+                         <paper-button toggles raised class="custom save" on-tap="consult">Enviar</paper-button>
+                       <paper-input disabled id="acept" label=""></paper-input>
+                   </div>
+              </paper-card>
      </template>
      <script>
      Polymer({
           is: 'my-login',
+          properties: {
+             pase: Boolean,
+           },
+                    
          consult: function() {
               var data = this.$.admin;
               data = data.serialize();
@@ -92,26 +106,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 'password': data.password,
               };
 
-              axios.post("https://jsonplaceholder.typicode.com/posts")
-                .then(res =>{
-                  console.log(res)
-                  console.log("Todo ok")
+              axios.get("http://186.90.81.120:3000/admin/superusuario/"+data.user+"/"+data.password).then(res =>{
+                   if(res.data.aceptado){
+                        console.log(res);
+                        this.$.acept.label=res.data.mensaje;
+                        this.$.password.value = "";
+                        this.$.user.value = "";
+                   }else{
+                        this.$.acept.label=res.data.mensaje;
+                        this.$.password.value = "";
+                        this.$.user.value = "";
+                   }
+                  
               }).catch(error =>{
-                  console.log(error)
                   console.log(error)
 
               })
             },
-          access: function(){
-              axios.get("http://jsonplaceholder.typicode.com/posts")
-               .then(response => {
-//                     if(response==true){
-//                          console.log("aceptado")
-//                     }
-              }).catch(error => {
-                     console.log(error)
-                   }) 
-          },
      });
      </script>
 </dom-module>
