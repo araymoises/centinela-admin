@@ -13,6 +13,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/iron-form/iron-form.html">
 <link rel="import" href="../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/paper-dialog/paper-dialog.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../bower_components/paper-card/paper-card.html">
 
@@ -59,19 +60,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                }
                a{
                     color: var(--paper-cyan-600);
-<<<<<<< HEAD
                }
                iron-icon{
                     width: 30px;
                     height: 30px;
                }
-=======
-               }
-               iron-icon{
-                    width: 30px;
-                    height: 30px;
-               }
->>>>>>> dcf9c54cfa96b22047e3717f14cb6aae7de015de
           </style>
 
                <app-location route="{{route}}"></app-location>
@@ -108,10 +101,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                    <div class="card-content">
                        <img src="../images/Cubo%203D.png">
                          <form is="iron-form" action="" method="get" id="person">
-                              <paper-input class="access" type="text" name="_id" placeholder="Ej: VXXXXXXXX" on-keypress="_keyPressed"></paper-input>
+                              <paper-input class="access"  id="ci" type="text" name="_id" placeholder="Ej: VXXXXXXXX" on-keypress="_keyPressed"></paper-input>
                          </form>
                    </div>
               </paper-card>
+              <paper-dialog id="dialog">
+                   <paper-input disabled id="dataModal" label=""></paper-input>
+               </paper-dialog>
                </app-drawer-layout>
 
 
@@ -157,28 +153,27 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 'identification': data._id,
               };
 
-
               axios.get("http://186.90.81.120:3000/api/"+data._id)
-
                 .then(res =>{
-                  console.log(res.data)
-                  console.log("Todo okkk")
+                   if(res.data.aceptado){
+                        console.log(res.data);
+                       this.$.dataModal.label=res.data.mensaje;
+                       this.$.dialog.open();
+                       this.$.ci.value="";
+                       this.$.ci.focus();
+
+                        console.log("OKOK");
+                   }else{
+                        console.log("NOT OK");
+                        this.$.dataModal.label="NO ACEPTADO";
+                        this.$.dialog.open();
+                   }
               }).catch(error =>{
                   console.log(error)
                   console.log(error)
 
               })
             },
-//          access: function(){
-//              axios.get("http://jsonplaceholder.typicode.com/posts")
-//               .then(response => {
-//                    if(response==true){
-//                         console.log("aceptado")
-//                    }
-//              }).catch(error => {
-//                     console.log(error)
-//                   })
-//          },
      });
      </script>
 </dom-module>
