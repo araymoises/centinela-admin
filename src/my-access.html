@@ -13,6 +13,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/iron-form/iron-form.html">
 <link rel="import" href="../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/paper-dialog/paper-dialog.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../bower_components/paper-card/paper-card.html">
 
@@ -103,8 +104,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                               <paper-input class="access" type="text" name="_id" placeholder="Ej: VXXXXXXXX" on-keypress="_keyPressed"></paper-input>
                          </form>
                    </div>
-                   <span value="holis">Holi</span>
               </paper-card>
+              <paper-dialog id="dialog">
+                   <paper-input disabled id="dataModal" label=""></paper-input>
+               </paper-dialog>
                </app-drawer-layout>
 
 
@@ -150,12 +153,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 'identification': data._id,
               };
 
-              axios.get("192.168.0.102:3000/api/")
+              axios.get("http://186.90.81.120:3000/api/"+data._id)
                 .then(res =>{
                    if(res.data.aceptado){
+                        console.log(res.data);
+                       this.$.dataModal.label="ACEPTADO";
                         console.log("OKOK");
                    }else{
-                         console.log("NOT OK");
+                        console.log("NOT OK");
+                        this.$.dataModal.label="NO ACEPTADO";
+                        this.$.dialog.open();
                    }
               }).catch(error =>{
                   console.log(error)
